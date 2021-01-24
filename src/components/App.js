@@ -3,6 +3,7 @@ import {
   useState,
   useEffect,
   useRef,
+  useCallback,
 } from "https://cdn.skypack.dev/preact/hooks";
 import htm from "https://unpkg.com/htm?module";
 // import { Codemirror } from "https://cdn.skypack.dev/@mischnic/codemirror-preact";
@@ -15,20 +16,29 @@ const html = htm.bind(h);
 
 const App = () => {
   const [keyState, setKeyState] = useState({ 1: "" });
+  const [keysHeld, setKeysHeld] = useState({});
   const [activeKey, setActiveKey] = useState("1");
   const [editorContent, setEditorContent] = useState(keyState["1"]);
   const [editorErrors, setEditorErrors] = useState("");
   const [displayState, setDisplayState] = useState("visibleFocusKeyboard");
   const editorRef = useRef(null);
-  const codemirrorRef = useRef(null);
 
   //Adds key event listeners
   useEffect(() => {
     window.addEventListener("keydown", handleKeydown);
-    return () => window.removeEventListener("keydown", handleKeydown);
+    window.addEventListener("keyup", handleKeyup);
+    return () => {
+      window.removeEventListener("keydown", handleKeydown);
+      window.removeEventListener("keyup", handleKeyup);
+    };
   });
 
+  function handleKeyup(e) {
+    setKeysHeld({ ...keysHeld, [e.key]: false });
+  }
+
   function handleKeydown(e) {
+    setKeysHeld({ ...keysHeld, [e.key]: true });
     const presetKeyRegex = /([a-z0-9;,./])/g;
     const key = e.key;
     if (key === "Escape") {
@@ -52,7 +62,11 @@ const App = () => {
   }
 
   function handleKeyEnter() {
-    if (displayState === "visibleFocusKeyboard") {
+    if (keysHeld["Control"] && keysHeld["Shift"]) {
+      evalCode(keyState[activeKey]);
+    } else if (keysHeld["Control"]) {
+      evalCode(extractCurrentLine(keyState[activeKey]));
+    } else if (displayState === "visibleFocusKeyboard") {
       setDisplayState("visibleFocusEditor");
       editorRef.current.focus();
     }
@@ -61,6 +75,9 @@ const App = () => {
   function handleKeyPreset(key) {
     if (displayState !== "visibleFocusEditor") {
       setActiveKey(key);
+      if (keyState[key]) {
+        evalCode(keyState[key]);
+      }
     }
   }
 
@@ -69,36 +86,39 @@ const App = () => {
     setKeyState({ ...keyState, [activeKey]: content });
   };
 
-  // Sets editor content and evals code when activeKey changes
-  useEffect(() => {
+  function evalCode(code) {
     setEditorErrors("");
-    if (keyState[activeKey]) {
-      setEditorContent(keyState[activeKey]);
-
-      try {
-        eval(keyState[activeKey]);
-      } catch (e) {
-        console.log(e);
-        setEditorErrors(e.message);
-      }
-    } else {
-      setEditorContent("");
+    try {
+      eval(code);
+    } catch (e) {
+      console.log(e);
+      setEditorErrors(e.message);
     }
-  }, [activeKey]);
+  }
 
-  // function initCodemirror(container) {
-  //   codemirrorRef.current = CodeMirror(container, {
-  //     content: editorContent,
-  //   });
-  //   codemirrorRef.current.on("focus", () => {
-  //     setDisplayState("visibleFocusEditor");
-  //   });
-  //   codemirrorRef.current.on("blur", () => {
-  //     setDisplayState("visibleFocusKeyboard");
-  //   });
-  //   codemirrorRef.current.on("change", () => {
-  //     handleChangeEditorContent(codemirrorRef.current.getValue());
-  //   });
+  function extractCurrentLine() {
+    const textArea = editorRef.current;
+    const lineNo = editorContent
+      .substr(0, textArea.selectionStart)
+      .split(/\r?\n|\r/).length;
+    const lineContent = editorContent.split(/\r?\n|\r/)[lineNo - 1];
+    return lineContent;
+  }
+
+  // function evalCurrentLine() {
+  //   // Get the current line from textarea
+  //   const textArea = editorRef.current;
+  //   const lineNo = editorContent
+  //     .substr(0, textArea.selectionStart)
+  //     .split(/\r?\n|\r/).length;
+  //   const lineContent = editorContent.split(/\r?\n|\r/)[lineNo - 1];
+  //   setEditorErrors("");
+  //   try {
+  //     eval(lineContent);
+  //   } catch (e) {
+  //     console.log(e);
+  //     setEditorErrors(e.message);
+  //   }
   // }
 
   return html`
@@ -107,7 +127,7 @@ const App = () => {
     ${displayState !== "hidden"
       ? html`
           <${Editor}
-            editorContent=${editorContent}
+            editorContent=${keyState[activeKey]}
             handleChangeEditorContent=${handleChangeEditorContent}
             editorRef=${editorRef}
             setDisplayState=${setDisplayState}

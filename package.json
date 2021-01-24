@@ -1,0 +1,27 @@
+{
+  "name": "hydramod",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "eslint": "^7.18.0",
+    "eslint-config-preact": "^1.1.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrieldavison/hydraMod.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabrieldavison/hydraMod/issues"
+  },
+  "homepage": "https://github.com/gabrieldavison/hydraMod#readme",
+  "eslintConfig": {
+    "extends": "preact"
+  }
+}

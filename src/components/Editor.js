@@ -12,7 +12,7 @@ const Editor = ({
   return html`
     <textarea
       ref=${editorRef}
-      value=${editorContent}
+      value=${editorContent ? editorContent : ""}
       onInput=${(e) => handleChangeEditorContent(e.target.value)}
       onFocus=${() => setDisplayState("visibleFocusEditor")}
       onBlur=${() => setDisplayState("visibleFocusKeyboard")}
