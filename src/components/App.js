@@ -3,10 +3,8 @@ import {
   useState,
   useEffect,
   useRef,
-  useCallback,
 } from "https://cdn.skypack.dev/preact/hooks";
 import htm from "https://unpkg.com/htm?module";
-// import { Codemirror } from "https://cdn.skypack.dev/@mischnic/codemirror-preact";
 
 import HydraCanvas from "./HydraCanvas.js";
 import Editor from "./Editor.js";
@@ -45,12 +43,27 @@ const App = () => {
       handleKeyEscape();
     } else if (key === "Enter") {
       handleKeyEnter();
+    } else if (key === "Tab") {
+      e.preventDefault();
+      handleKeyTab();
     } else if (presetKeyRegex.test(key) && key.length === 1) {
       handleKeyPreset(key);
     }
   }
+  function handleKeyTab() {
+    const textarea = editorRef.current;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
 
-  //NEED TO ADD STATE THAT DECIDES WHEN TO BLOCK ENTER BUTTON DEFAULT BEHAVIOUR
+    // set textarea value to: text before caret + tab + text after caret
+    keyState[activeKey] =
+      keyState[activeKey].substring(0, start) +
+      "\t" +
+      keyState[activeKey].substring(end);
+
+    // put caret at right position again
+    textarea.selectionStart = textarea.selectionEnd = start + 1;
+  }
 
   function handleKeyEscape() {
     editorRef.current?.blur();
@@ -63,6 +76,7 @@ const App = () => {
 
   function handleKeyEnter() {
     if (keysHeld["Control"] && keysHeld["Shift"]) {
+      hush();
       evalCode(keyState[activeKey]);
     } else if (keysHeld["Control"]) {
       evalCode(extractCurrentLine(keyState[activeKey]));
@@ -105,24 +119,7 @@ const App = () => {
     return lineContent;
   }
 
-  // function evalCurrentLine() {
-  //   // Get the current line from textarea
-  //   const textArea = editorRef.current;
-  //   const lineNo = editorContent
-  //     .substr(0, textArea.selectionStart)
-  //     .split(/\r?\n|\r/).length;
-  //   const lineContent = editorContent.split(/\r?\n|\r/)[lineNo - 1];
-  //   setEditorErrors("");
-  //   try {
-  //     eval(lineContent);
-  //   } catch (e) {
-  //     console.log(e);
-  //     setEditorErrors(e.message);
-  //   }
-  // }
-
   return html`
-    <h1>${activeKey}</h1>
     <${HydraCanvas} />
     ${displayState !== "hidden"
       ? html`
@@ -133,7 +130,7 @@ const App = () => {
             setDisplayState=${setDisplayState}
           />
           <div>${editorErrors}</div>
-          <${Keyboard} setActiveKey=${setActiveKey} />
+          <${Keyboard} setActiveKey=${setActiveKey} activeKey=${activeKey} />
         `
       : null}
   `;
