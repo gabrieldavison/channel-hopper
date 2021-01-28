@@ -1,0 +1,11 @@
+.editor {
+  margin: 4rem;
+  margin-bottom: 2rem;
+  width: 700px;
+  height: 700px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-size: 1.5em;
+  padding: 1em;
+  border-radius: 5px;
+}

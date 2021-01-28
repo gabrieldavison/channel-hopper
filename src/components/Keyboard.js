@@ -9,11 +9,13 @@ const allKeys = ['1','2','3','4','5','6','7','8','9','0',
 
 const Keyboard = ({ setActiveKey, activeKey }) => {
   return html`
-    <div>
+    <div class="keyboard">
       ${allKeys.map(
         (item) => html`
           <button
-            class=${activeKey === item ? "preset-selected" : ""}
+            class=${activeKey === item
+              ? "keyboard__button keyboard__button--active "
+              : "keyboard__button "}
             onClick=${() => setActiveKey(item)}
             key=${item}
           >

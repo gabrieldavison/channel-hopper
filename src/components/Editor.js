@@ -11,6 +11,7 @@ const Editor = ({
 }) => {
   return html`
     <textarea
+      class="editor"
       ref=${editorRef}
       value=${editorContent ? editorContent : ""}
       onInput=${(e) => handleChangeEditorContent(e.target.value)}

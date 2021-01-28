@@ -23,7 +23,11 @@ const HydraCanvas = () => {
     render(o1);
   }, []);
 
-  return html` <canvas ref=${hydraCanvasRef} id="hydra-canvas"></canvas>`;
+  return html` <canvas
+    class="hydra-canvas"
+    ref=${hydraCanvasRef}
+    id="hydra-canvas"
+  ></canvas>`;
 };
 
 export default HydraCanvas;

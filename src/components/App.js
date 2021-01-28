@@ -14,6 +14,9 @@ const html = htm.bind(h);
 
 const App = () => {
   const [keyState, setKeyState] = useState({ 1: "" });
+  const [presetState, setPresetState] = useState({
+    1: { content: "", clearEval: true },
+  });
   const [keysHeld, setKeysHeld] = useState({});
   const [activeKey, setActiveKey] = useState("1");
   const [editorContent, setEditorContent] = useState(keyState["1"]);
@@ -42,7 +45,7 @@ const App = () => {
     if (key === "Escape") {
       handleKeyEscape();
     } else if (key === "Enter") {
-      handleKeyEnter();
+      handleKeyEnter(e);
     } else if (key === "Tab") {
       e.preventDefault();
       handleKeyTab();
@@ -74,13 +77,14 @@ const App = () => {
     }
   }
 
-  function handleKeyEnter() {
+  function handleKeyEnter(e) {
     if (keysHeld["Control"] && keysHeld["Shift"]) {
       hush();
       evalCode(keyState[activeKey]);
     } else if (keysHeld["Control"]) {
       evalCode(extractCurrentLine(keyState[activeKey]));
     } else if (displayState === "visibleFocusKeyboard") {
+      e.preventDefault();
       setDisplayState("visibleFocusEditor");
       editorRef.current.focus();
     }

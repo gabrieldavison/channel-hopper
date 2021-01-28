@@ -1,0 +1,41 @@
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(10, auto);
+  width: 400px;
+  margin: 0 4rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+}
+
+.keyboard__button {
+  /* Button reset */
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  background: transparent;
+  /* inherit font & color from ancestor */
+  color: inherit;
+  font: inherit;
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
+
+  /* Button styles */
+  height: 25px;
+  width: 25px;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.keyboard__button.keyboard__button--active {
+  background-color: white;
+  color: black;
+  border-radius: 3px;
+}
