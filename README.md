@@ -43,4 +43,4 @@ render(o0);
 
 ## Exporting / Importing Data
 
-Your presets are saved to localstorage but I HIGHLY recommend you back them up. If you click the three dots in the top right hand corner the import / export dialog will open. From here you can export your presets to a json file or import a previous backup.
+Your presets are saved to localstorage but I HIGHLY recommend you back them up. If you click the three dots in the top right hand corner when the editor is visible, the import / export dialog will open. From here you can export your presets to a json file or import a previous backup.
