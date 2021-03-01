@@ -2,7 +2,7 @@
 
 ![ChannelHopper Screenshot](./screenshot.png)
 
-[Try it out here.]()
+[Try it out here.](https://channelhopper.ch1p.net/)
 
 An alternative interface for [Hydra](https://github.com/ojack/hydra) based around triggering presets with your keyboard.
 
@@ -40,3 +40,7 @@ It may need to be rewritten as:
 osc(100).out(o0);
 render(o0);
 ```
+
+## Exporting / Importing Data
+
+Your presets are saved to localstorage but I HIGHLY recommend you back them up. If you click the three dots in the top right hand corner the import / export dialog will open. From here you can export your presets to a json file or import a previous backup.
