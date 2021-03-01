@@ -1,11 +1,21 @@
 .keyboard {
-  display: grid;
-  grid-template-columns: repeat(10, auto);
   width: 400px;
   margin: 0 4rem;
   color: white;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.keyboard__keys {
+  display: grid;
+  grid-template-columns: repeat(10, auto);
+  /* width: 400px;
+  margin: 0 4rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px; */
 }
 
 .keyboard__button {
@@ -32,6 +42,12 @@
   width: 25px;
   font-size: 1.2em;
   font-weight: bold;
+}
+
+.keyboard__button--wide {
+  height: auto;
+  width: auto;
+  padding: 0.2em;
 }
 
 .keyboard__button.keyboard__button--active {

@@ -1,6 +1,6 @@
 .editor {
   margin: 4rem;
-  margin-bottom: 2rem;
+  margin-bottom: 0;
   width: 700px;
   height: 700px;
   color: white;
@@ -8,4 +8,12 @@
   font-size: 1.5em;
   padding: 1em;
   border-radius: 5px;
+}
+
+.editor__errors {
+  margin: 0 4rem;
+  margin-bottom: 2rem;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 700px;
 }

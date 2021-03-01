@@ -8,6 +8,7 @@ const Editor = ({
   handleChangeEditorContent,
   editorRef,
   setDisplayState,
+  editorErrors,
 }) => {
   return html`
     <textarea
@@ -17,7 +18,9 @@ const Editor = ({
       onInput=${(e) => handleChangeEditorContent(e.target.value)}
       onFocus=${() => setDisplayState("visibleFocusEditor")}
       onBlur=${() => setDisplayState("visibleFocusKeyboard")}
-    ></textarea>
+    >
+    </textarea>
+    <div class="editor__errors">${editorErrors}</div>
   `;
 };
 

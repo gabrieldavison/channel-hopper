@@ -1,6 +1,8 @@
+@import "./components/App.css";
 @import "./components/HydraCanvas.css";
 @import "./components/Editor.css";
 @import "./components/Keyboard.css";
+@import "./components/Modal.css";
 
 html {
   box-sizing: border-box;
@@ -14,8 +16,7 @@ html {
 html {
   font-family: monospace;
 }
-
-/* .preset-selected {
-  background-color: black;
-  color: white;
-} */
+body {
+  width: 100vw;
+  height: 100vh;
+}
