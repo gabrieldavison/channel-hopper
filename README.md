@@ -1,12 +1,12 @@
-# HydraMod
+# ChannelHopper
 
-![HydraMod Screenshot](./screenshot.png)
+![ChannelHopper Screenshot](./screenshot.png)
 
 [Try it out here.]()
 
 An alternative interface for [Hydra](https://github.com/ojack/hydra) based around triggering presets with your keyboard.
 
-[Hydra](https://github.com/ojack/hydra) is a language for livecoding visuals based around the dieas of analog video synthesis. HydraMod is an interface that wraps the underlying synth engine [hydra-synth](https://github.com/ojack/hydra-synth) and allows you to trigger bits of code using the buttons on your keyboard MPC style.
+[Hydra](https://github.com/ojack/hydra) is a language for livecoding visuals based around the dieas of analog video synthesis. ChannelHopper is an interface that wraps the underlying synth engine [hydra-synth](https://github.com/ojack/hydra-synth) and allows you to trigger bits of code using the buttons on your keyboard MPC style.
 
 ## Controls
 
@@ -24,7 +24,7 @@ An alternative interface for [Hydra](https://github.com/ojack/hydra) based aroun
 
 ## Writing Presets
 
-The [Hydra repo](https://github.com/ojack/hydra) is probably the best place to start learning about the Hydra language, there's lots of good resources there. Most existing hydra code should work inside hydraMod with one caveat:
+The [Hydra repo](https://github.com/ojack/hydra) is probably the best place to start learning about the Hydra language, there's lots of good resources there. Most existing hydra code should work inside ChannelHopper with one caveat:
 
 One change you might have to make with existing code is to be explicit about where your final output is routed and which output is being rendered.
 
